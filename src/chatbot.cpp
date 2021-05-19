@@ -42,11 +42,131 @@ ChatBot::~ChatBot()
     }
 }
 
-//// STUDENT CODE
-////
+////  Assignment Operator + Copy Constructor and Move Constructor + Move Assignment Operator
+////  Implementations for the methods of "Rule of Five" model
+////****************************************************************************************************
 
-////
-//// EOF STUDENT CODE
+
+ChatBot &ChatBot::operator= (const ChatBot &src )
+{
+    std::cout<<"ChatBot Assignment Operator"<<std::endl;
+    
+    //check for self assignment
+    if(&src == this)
+       return *this;
+    //-------------------------------------------------------------------------------------------------
+    if(_image!=NULL)
+    {
+       delete _image;
+    }
+
+    //deep copy the "owned data handle"
+    if(src._image!=NULL)
+    {
+    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
+    *_image= *src._image;//copy image data from the source(Deep Copy)
+    }
+    else{
+        _image=NULL;
+    }
+
+    // copy "not owned data handles" from the source
+    _currentNode= src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    
+    return *this;
+
+}
+
+ChatBot::ChatBot(const ChatBot &src)
+{
+  std::cout<<"ChatBot Copy Constructor"<<std::endl;
+  
+    //deep copy the "owned data handle"
+    if(src._image!=NULL)
+    {
+    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
+    *_image= *src._image;//copy image data from the source(Deep Copy)
+    }
+    else{
+        _image=NULL;
+    }
+
+    // copy "not owned data handles" from the source
+    _currentNode= src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+    _chatLogic->SetChatbotHandle(this);  
+
+}
+
+ChatBot &ChatBot::operator= (ChatBot &&src )
+{
+    std::cout<<"ChatBot Assignment Move Operator"<<std::endl;
+    
+    //check for self assignment
+    if(&src == this)
+       return *this;
+    //-------------------------------------------------------------------------------------------------
+    if(_image!=NULL)
+    {
+       delete _image;
+    }
+
+    //deep copy the "owned data handle"
+    if(src._image!=NULL)
+    {
+    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
+    *_image= *src._image;//copy image data from the source(Deep Copy)
+    }
+
+    // copy "not owned data handles" from the source
+    _currentNode= src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    
+    //Invalidating the Source Data----------------------------------------------------------------------
+    src._image = NULL;
+
+    return *this;
+
+}
+
+ChatBot::ChatBot(ChatBot &&src)
+{
+  std::cout<<"ChatBot Move Constructor"<<std::endl;
+         
+    //deep copy the "owned data handle"
+    if(src._image!=NULL)
+    {
+    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
+    *_image= *src._image;//copy image data from the source(Deep Copy)
+    }
+    else{
+        _image=NULL;
+    }
+
+    // copy "not owned data handles" from the source
+    _currentNode= src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    
+    //Invalidating the Source Data----------------------------------------------------------------------
+    src._image = NULL;
+    //src._chatLogic = nullptr;
+    // src._rootNode = nullptr;
+
+}
+
+
+
+////***************************************************************************************************
+//// -------------------------------------------------------------------------------------------------
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {

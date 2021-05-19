@@ -27,17 +27,21 @@ public:
     ChatBot(std::string filename); // constructor WITH memory allocation
     ~ChatBot();
 
-    //// STUDENT CODE
+    //// Adding new definitions for the methods of "Rule of Five" model
     ////
 
+    ChatBot &operator= (const ChatBot &src );
+    ChatBot(const ChatBot &src);
+    ChatBot &operator= (ChatBot &&src );
+    ChatBot(ChatBot &&src);
+
     ////
-    //// EOF STUDENT CODE
+    //// -------------------------------------------------------------------------------
 
     // getters / setters
     void SetCurrentNode(GraphNode *node);
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
     void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
-    ChatLogic* GetChatLogicHandle() { return _chatLogic; }
     wxBitmap *GetImageHandle() { return _image; }
 
     // communication

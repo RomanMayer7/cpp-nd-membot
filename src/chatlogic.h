@@ -13,15 +13,15 @@ class GraphNode;
 class ChatLogic
 {
 private:
-    //// STUDENT CODE
+    //// Making the GraphNode elements exclusively owned by ChatLogic class
     ////
 
     // data handles (owned)
-    std::vector<GraphNode *> _nodes;
-    std::vector<GraphEdge *> _edges;
+     std::vector<std::unique_ptr<GraphNode >> _nodes;
+    //std::vector<GraphEdge *> _edges; //Edges data gets deleted automatically so no longer need to manage this handle
 
     ////
-    //// EOF STUDENT CODE
+    //// -----------------------------------
 
     // data handles (not owned)
     GraphNode *_currentNode;
