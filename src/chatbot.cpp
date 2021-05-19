@@ -115,11 +115,10 @@ ChatBot &ChatBot::operator= (ChatBot &&src )
        delete _image;
     }
 
-    //deep copy the "owned data handle"
+    //shallow copy the "owned data handle"
     if(src._image!=NULL)
     {
-    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
-    *_image= *src._image;//copy image data from the source(Deep Copy)
+    _image= src._image;//copy image data from the source(Shallow Copy)
     }
 
     // copy "not owned data handles" from the source
@@ -131,6 +130,9 @@ ChatBot &ChatBot::operator= (ChatBot &&src )
     
     //Invalidating the Source Data----------------------------------------------------------------------
     src._image = NULL;
+    src._chatLogic = nullptr;
+    src._rootNode = nullptr;
+    src._currentNode=nullptr;
 
     return *this;
 
@@ -140,11 +142,10 @@ ChatBot::ChatBot(ChatBot &&src)
 {
   std::cout<<"ChatBot Move Constructor"<<std::endl;
          
-    //deep copy the "owned data handle"
+    //shallow copy the "owned data handle"
     if(src._image!=NULL)
     {
-    _image = new wxBitmap();//allocate a memory block for the image in new address space on the heap
-    *_image= *src._image;//copy image data from the source(Deep Copy)
+    _image = src._image;//copy image data from the source(Shallow Copy)
     }
     else{
         _image=NULL;
@@ -158,8 +159,9 @@ ChatBot::ChatBot(ChatBot &&src)
     
     //Invalidating the Source Data----------------------------------------------------------------------
     src._image = NULL;
-    //src._chatLogic = nullptr;
-    // src._rootNode = nullptr;
+    src._chatLogic = nullptr;
+    src._rootNode = nullptr;
+    src._currentNode=nullptr;
 
 }
 
